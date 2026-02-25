@@ -1,7 +1,8 @@
 import os
 
 from api import PetFriends
-from settings import valid_password, valid_email
+from settings import valid_password, valid_email, key
+
 
 pf = PetFriends()
 
@@ -22,8 +23,8 @@ def test_get_all_pets_with_valid_key(filter=''):
     assert status == 200
     assert len(result['pets']) > 0
 
-def test_add_new_pet_with_valid_data(name='Барбоскин', animal_type='двортерьер',
-                                     age='4', pet_photo='images/cat1.jpg'):
+def test_add_new_pet_with_valid_data(name='Роки', animal_type='Белка',
+                                     age=4, pet_photo='images\cat1.jpg'):
     """Проверяем что можно добавить питомца с корректными данными"""
 
     # Получаем полный путь изображения питомца и сохраняем в переменную pet_photo
@@ -33,7 +34,7 @@ def test_add_new_pet_with_valid_data(name='Барбоскин', animal_type='д�
     _, auth_key = pf.get_api_key(valid_email, valid_password)
 
     # Добавляем питомца
-    status, result = pf.post_add_new_pet(auth_key, name, animal_type, age, pet_photo)
+    status, result = pf.add_new_pet(auth_key, name, animal_type, age, pet_photo)
 
     # Сверяем полученный ответ с ожидаемым результатом
     assert status == 200
@@ -81,4 +82,7 @@ def test_successful_update_self_pet_info(name='Мурзик', animal_type='Ко�
     else:
         # если спиок питомцев пустой, то выкидываем исключение с текстом об отсутствии своих питомцев
         raise Exception("There is no my pets")
+
+
+
 
